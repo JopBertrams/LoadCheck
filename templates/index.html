@@ -1,0 +1,379 @@
+<!--
+ API Documentation HTML Template  - 1.0.1
+ Copyright © 2016 Florian Nicolas
+ Licensed under the MIT license.
+ https://github.com/ticlekiwi/API-Documentation-HTML-Template
+ !-->
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>LoadCheck API - Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/hightlightjs-dark.css') }}"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300&family=Source+Code+Pro:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+      media="all"
+    />
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
+  </head>
+
+  <body class="one-content-column-version">
+    <div class="left-menu">
+      <div class="content-logo">
+        <div class="logo">
+          <img
+            src="{{ url_for('static', filename='image/logo.png') }}"
+            height="80"
+          />
+          <br />
+          <span>API Documentation</span>
+        </div>
+      </div>
+      <div class="content-menu">
+        <div class="content-infos">
+          <div class="info"><b>Version:</b> 1.0.0</div>
+          <div class="info"><b>Last Updated:</b> 26th Mar, 2023</div>
+        </div>
+        <ul>
+          <li class="scroll-to-link" data-target="content-get-started">
+            <a>Get Started</a>
+          </li>
+          <li class="scroll-to-link" data-target="content-get-students">
+            <a>Get Students</a>
+          </li>
+          <li class="scroll-to-link" data-target="content-get-student">
+            <a>Get Student</a>
+          </li>
+          <li
+            class="scroll-to-link"
+            data-target="content-get-loadshedding-group"
+          >
+            <a>Get loadshedding group</a>
+          </li>
+          <li
+            class="scroll-to-link"
+            data-target="content-get-loadshedding-schedule"
+          >
+            <a>Get loadshedding schedule</a>
+          </li>
+          <li class="scroll-to-link" data-target="content-get-classes">
+            <a>Get classes</a>
+          </li>
+          <li class="scroll-to-link" data-target="content-get-class">
+            <a>Get class</a>
+          </li>
+          <li
+            class="scroll-to-link"
+            data-target="content-get-students-in-class"
+          >
+            <a>Get students in class</a>
+          </li>
+          <li class="scroll-to-link" data-target="content-errors">
+            <a>Errors</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="content">
+        <div class="overflow-hidden content-section" id="content-get-started">
+          <h1>Get started</h1>
+          <p>
+            LoadCheck is an API made for lecturers of
+            <a href="https://www.belgiumcampus.ac.za/" target="_blank"
+              >Belgium Campus</a
+            >
+            to check the loadshedding status of their online students.
+          </p>
+          <p>
+            This API makes use of the <strong>EskomSePush API 2.0</strong> which
+            requires to use a token. This token is currently limited to
+            <strong>50 requests per day</strong> and is for testing purposes
+            only!
+          </p>
+        </div>
+        <div class="overflow-hidden content-section" id="content-get-students">
+          <h2>get students</h2>
+          <p>
+            To get a list of students, you need to make a GET request to the
+            following URL:<br />
+            <code class="higlighted break-word"
+              >http://loadcheck.jopbertrams.nl/students</code
+            >
+          </p>
+          <h4>Result example:</h4>
+          <br />
+          <pre><code class="json"> 
+            [
+              {
+                "id": 1,
+                "name": "Student A",
+                "address": "28 Maranta Ave, Karenpark, Akasia, 0118",
+                "coordinates_lat": "-25.6667221",
+                "coordinates_lon": "28.1142254",
+                "loadsheddingGroup": "tshwane-3-amandasig"
+              },
+              {
+                "id": 2,
+                "name": "Student B",
+                "address": "28 Maranta Ave, Karenpark, Akasia, 0118",
+                "coordinates_lat": null,
+                "coordinates_lon": null,
+                "loadsheddingGroup": null
+              },
+              {
+                "id": 3,
+                "name": "Student C",
+                "address": "23 High St, Randburg, 2194",
+                "coordinates_lat": "-26.1909199",
+                "coordinates_lon": "27.9902753",
+                "loadsheddingGroup": "jhbcitypower2-5-crosby"
+              }
+            ]
+          </code></pre>
+        </div>
+        <div class="overflow-hidden content-section" id="content-get-student">
+          <h2>get student</h2>
+          <p>
+            To get a specific student, you need to make a GET request to the
+            following URL with a student Id:<br />
+            <code class="higlighted break-word"
+              >http://loadcheck.jopbertrams.nl/students/{id}</code
+            >
+          </p>
+          <h4>Result example:</h4>
+          <br />
+          <pre><code class="json"> 
+            {
+              "id": 1,
+              "name": "Student A",
+              "address": "28 Maranta Ave, Karenpark, Akasia, 0118",
+              "coordinates_lat": "-25.6667221",
+              "coordinates_lon": "28.1142254",
+              "loadsheddingGroup": "tshwane-3-amandasig"
+            }
+          </code></pre>
+        </div>
+        <div
+          class="overflow-hidden content-section"
+          id="content-get-loadshedding-group"
+        >
+          <h2>get loadshedding group</h2>
+          <p>
+            <strong
+              >This endpoint uses the EskomSePush API 2.0. Do not use it
+              unnecessarily often because of the daily limit!</strong
+            >
+          </p>
+          <p>
+            To see in which Eskom Loadshedding group a student lives, you need
+            to make a GET request to the following URL with a student Id:<br />
+            <code class="higlighted break-word"
+              >http://loadcheck.jopbertrams.nl/students/{id}/loadsheddinggroup</code
+            >
+          </p>
+          <h4>Result example:</h4>
+          <br />
+          <pre><code class="json"> 
+            "tshwane-3-amandasig"
+          </code></pre>
+        </div>
+        <div
+          class="overflow-hidden content-section"
+          id="content-get-loadshedding-schedule"
+        >
+          <h2>get loadshedding schedule</h2>
+          <p>
+            <strong
+              >This endpoint uses the EskomSePush API 2.0. Do not use it
+              unnecessarily often because of the daily limit!</strong
+            >
+          </p>
+          <p>
+            To receive the loadshedding schedule of a student, you need to make
+            a GET request to the following URL with a student Id:<br />
+            <code class="higlighted break-word"
+              >http://loadcheck.jopbertrams.nl/students/{id}/loadsheddingschedule</code
+            >
+          </p>
+          <h4>Result example:</h4>
+          <br />
+          <pre><code class="json"> 
+            {
+              "events": [
+                {
+                  "end": "2023-03-27T10:30:00+02:00",
+                  "note": "Stage 2",
+                  "start": "2023-03-27T08:00:00+02:00"
+                },
+                {
+                  "end": "2023-03-28T02:30:00+02:00",
+                  "note": "Stage 3",
+                  "start": "2023-03-28T00:00:00+02:00"
+                },
+                {
+                  "end": "2023-03-28T18:30:00+02:00",
+                  "note": "Stage 2",
+                  "start": "2023-03-28T16:00:00+02:00"
+                }
+              ],
+              "info": {
+                "name": "AMANDASIG (3)",
+                "region": "City of Tshwane"
+              },
+              "schedule": {
+                "days": [
+                  {
+                    "date": "2023-03-26",
+                    "name": "Sunday",
+                    "stages": [
+                      [
+                        "00:00-02:30"
+                      ],
+                      [
+                        "00:00-02:30"
+                      ],
+                      [
+                        "00:00-02:30",
+                        "16:00-18:30"
+                      ],
+                      [
+                        "00:00-02:30",
+                        "08:00-10:30",
+                        "16:00-18:30"
+                      ],
+                      [
+                        "00:00-04:30",
+                        "08:00-10:30",
+                        "16:00-18:30"
+                      ],
+                      [
+                        "00:00-04:30",
+                        "08:00-10:30",
+                        "16:00-18:30"
+                      ],
+                      [
+                        "00:00-04:30",
+                        "08:00-10:30",
+                        "16:00-20:30"
+                      ],
+                      [
+                        "00:00-04:30",
+                        "08:00-12:30",
+                        "16:00-20:30"
+                      ]
+                    ]
+                  }         
+                ]
+              }
+            }
+          </code></pre>
+        </div>
+        <div class="overflow-hidden content-section" id="content-get-classes">
+          <h2>get classes</h2>
+          <p>
+            To get an overview of all classes, you need to make a GET request to
+            the following URL:<br />
+            <code class="higlighted break-word"
+              >http://loadcheck.jopbertrams.nl/classes</code
+            >
+          </p>
+          <h4>Result example:</h4>
+          <br />
+          <pre><code class="json"> 
+            [
+              {
+                "id": 1,
+                "name": "X",
+                "time": "AM"
+              },
+              {
+                "id": 2,
+                "name": "Y",
+                "time": "PM"
+              },
+              {
+                "id": 3,
+                "name": "A",
+                "time": "AM"
+              },
+              {
+                "id": 4,
+                "name": "B",
+                "time": "PM"
+              }
+            ]
+          </code></pre>
+        </div>
+        <div class="overflow-hidden content-section" id="content-get-class">
+          <h2>get class</h2>
+          <p>
+            To get a specific class, you need to make a GET request to the
+            following URL with a class Id:<br />
+            <code class="higlighted break-word"
+              >http://loadcheck.jopbertrams.nl/classes/{id}</code
+            >
+          </p>
+          <h4>Result example:</h4>
+          <br />
+          <pre><code class="json"> 
+              {
+                "id": 1,
+                "name": "X",
+                "time": "AM"
+              }
+          </code></pre>
+        </div>
+        <div
+          class="overflow-hidden content-section"
+          id="content-get-students-in-class"
+        >
+          <h2>get students in class</h2>
+          <p>
+            To get an overview of all students in a certain class, you need to
+            make a GET request to the following URL with a class Id:<br />
+            <code class="higlighted break-word"
+              >http://loadcheck.jopbertrams.nl/classes/{id}/students</code
+            >
+          </p>
+          <h4>Result example:</h4>
+          <br />
+          <pre><code class="json"> 
+            [
+              {
+                "id": 15,
+                "name": "Student O",
+                "address": "4 Oxford Rd, Rosebank, 2196",
+                "coordinates_lat": null,
+                "coordinates_lon": null,
+                "loadsheddingGroup": null
+              }
+            ]
+          </code></pre>
+        </div>
+        <div class="overflow-hidden content-section" id="content-errors">
+          <h2>Errors</h2>
+          <p>Not implemented yet...</p>
+        </div>
+        <br /><br /><br />
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>
