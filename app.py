@@ -1,12 +1,22 @@
 import os
-from flask import Flask, render_template
+from os.path import join, dirname, realpath
+from flask import *
 from flask_cors import CORS
+from fileinput import filename
+from werkzeug.utils import secure_filename
 import mysql.connector
 import requests
 import json
+from PyPDF2 import PdfReader
+
+
+UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'uploads')
+ALLOWED_EXTENSIONS = {'pdf'}
 
 # Create Flask app
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['SECRET_KEY'] = 'mysecretkey'
 CORS(app)
 
 # Create MySQL connection
@@ -40,7 +50,6 @@ def get_student_loadshedding_group(id):
     cursor.execute("SELECT * FROM students WHERE id = %s;", (id,))
     student = cursor.fetchone()
     if student['loadsheddingGroup'] == None:
-        # TODO: Get loadshedding group from Eskom API and save to database
         return json.dumps(get_loadshedding_group(student), default=str)
     return json.dumps(student['loadsheddingGroup'], default=str)
 
@@ -79,7 +88,52 @@ def get_class_students(id):
     students = cursor.fetchall()
     return json.dumps(students, default=str)
 
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        # Check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # If the user does not select a file, the browser submits an empty file without a filename
+        if file.filename == '':
+            flash('No file selected, please select a file.')
+            return redirect(request.url)
+        # Check if the file is one of the allowed types/extensions
+        if not allowed_file(file.filename):
+            flash('That file extension is not allowed. Please upload a .pdf file.')
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            address = read_pdf(filename)
+            incomplete = not all(address.values())
+            if incomplete:
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                flash('Please fill in all fields in the PDF.')
+                return redirect(request.url)
+            return json.dumps(address, default=str)
+
+    return render_template("upload.html")
+
+
+@app.route('/uploads/<name>')
+def download_file(name):
+    return send_from_directory(app.config["UPLOAD_FOLDER"], name)
+
 # Functions
+
+
+def read_pdf(filename):
+    reader = PdfReader(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    address = reader.get_form_text_fields()
+    return address
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 def get_loadshedding_group(student):

@@ -11,17 +11,6 @@ var elements = [];
   };
 });
 
-document.getElementById('button-menu-mobile').onclick = function (e) {
-  e.preventDefault();
-  document.querySelector('html').classList.toggle('menu-opened');
-};
-document.querySelector('.left-menu .mobile-menu-closer').onclick = function (
-  e
-) {
-  e.preventDefault();
-  document.querySelector('html').classList.remove('menu-opened');
-};
-
 function debounce(func) {
   var timer;
   return function (event) {
@@ -43,33 +32,6 @@ function calculElements() {
       elements.push(section);
     }
   );
-  onScroll();
-}
-
-function onScroll() {
-  var scroll = window.pageYOffset;
-  console.log('scroll', scroll, elements);
-  for (var i = 0; i < elements.length; i++) {
-    var section = elements[i];
-    if (scroll <= section.maxHeight) {
-      var elems = document.querySelectorAll('.content-menu ul li');
-      [].forEach.call(elems, function (el) {});
-      var activeElems = document.querySelectorAll(
-        ".content-menu ul li[data-target='" + section.id + "']"
-      );
-      [].forEach.call(activeElems, function (el) {});
-      break;
-    }
-  }
-  if (window.innerHeight + scroll + 5 >= document.body.scrollHeight) {
-    // end of scroll, last element
-    var elems = document.querySelectorAll('.content-menu ul li');
-    [].forEach.call(elems, function (el) {});
-    var activeElems = document.querySelectorAll(
-      '.content-menu ul li:last-child'
-    );
-    [].forEach.call(activeElems, function (el) {});
-  }
 }
 
 calculElements();
@@ -85,5 +47,4 @@ window.addEventListener(
 );
 window.addEventListener('scroll', function (e) {
   e.preventDefault();
-  onScroll();
 });

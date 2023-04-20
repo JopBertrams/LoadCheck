@@ -45,8 +45,8 @@
       </div>
       <div class="content-menu">
         <div class="content-infos">
-          <div class="info"><b>Version:</b> 1.0.0</div>
-          <div class="info"><b>Last Updated:</b> 26th Mar, 2023</div>
+          <div class="info"><b>Version:</b> 1.0.1</div>
+          <div class="info"><b>Last Updated:</b> 20th Apr, 2023</div>
         </div>
         <ul>
           <li class="scroll-to-link" data-target="content-get-started">
@@ -81,6 +81,9 @@
             data-target="content-get-students-in-class"
           >
             <a>Get students in class</a>
+          </li>
+          <li class="scroll-to-link" data-target="content-upload">
+            <a>Upload residential address</a>
           </li>
           <li class="scroll-to-link" data-target="content-errors">
             <a>Errors</a>
@@ -364,6 +367,29 @@
                 "loadsheddingGroup": null
               }
             ]
+          </code></pre>
+        </div>
+        <div class="overflow-hidden content-section" id="content-upload">
+          <h2>upload residential address</h2>
+          <p>
+            When a GET request is made to this URL the user is able to upload
+            the residential address form of a student. If the user uploaded a
+            valid PDF file with every field filled in the response will be a
+            JSON with the data from the fields.<br />
+            <code class="higlighted break-word"
+              >http://loadcheck.jopbertrams.nl/upload</code
+            >
+          </p>
+          <h4>Result example:</h4>
+          <br />
+          <pre><code class="json"> 
+            {
+              "First name": "John",
+              "Surname": "Doe",
+              "Address": "138 Berg Ave",
+              "Postcode": "0182",
+              "Locality": "Akasia"
+            }
           </code></pre>
         </div>
         <div class="overflow-hidden content-section" id="content-errors">
