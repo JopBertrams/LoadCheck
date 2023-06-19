@@ -45,8 +45,8 @@
       </div>
       <div class="content-menu">
         <div class="content-infos">
-          <div class="info"><b>Version:</b> 1.0.1</div>
-          <div class="info"><b>Last Updated:</b> 20th Apr, 2023</div>
+          <div class="info"><b>Version:</b> 1.2</div>
+          <div class="info"><b>Last Updated:</b> 19th Jun, 2023</div>
         </div>
         <ul>
           <li class="scroll-to-link" data-target="content-get-started">
@@ -58,11 +58,8 @@
           <li class="scroll-to-link" data-target="content-get-student">
             <a>Get Student</a>
           </li>
-          <li
-            class="scroll-to-link"
-            data-target="content-get-loadshedding-group"
-          >
-            <a>Get loadshedding group</a>
+          <li class="scroll-to-link" data-target="content-update-student">
+            <a>Update Student</a>
           </li>
           <li
             class="scroll-to-link"
@@ -70,20 +67,14 @@
           >
             <a>Get loadshedding schedule</a>
           </li>
-          <li class="scroll-to-link" data-target="content-get-classes">
-            <a>Get classes</a>
-          </li>
-          <li class="scroll-to-link" data-target="content-get-class">
-            <a>Get class</a>
-          </li>
           <li
             class="scroll-to-link"
-            data-target="content-get-students-in-class"
+            data-target="content-get-loadshedding-schedule-campus"
           >
-            <a>Get students in class</a>
+            <a>Get loadshedding schedule campus</a>
           </li>
-          <li class="scroll-to-link" data-target="content-upload">
-            <a>Upload residential address</a>
+          <li class="scroll-to-link" data-target="content-get-class-info">
+            <a>Get class info</a>
           </li>
           <li class="scroll-to-link" data-target="content-errors">
             <a>Errors</a>
@@ -104,48 +95,48 @@
             to check the loadshedding status of their online students.
           </p>
           <p>
-            This API makes use of the <strong>EskomSePush API 2.0</strong> which
-            requires to use a token. This token is currently limited to
-            <strong>50 requests per day</strong> and is for testing purposes
-            only!
+            This API makes use of the open-source
+            <strong>eskom-calendar API</strong> to retrieve loadshedding
+            information. Special thanks to
+            <a
+              href="https://github.com/beyarkay/eskom-calendar/"
+              target="_blank"
+              >beyarkay</a
+            >
+            for this great API.
           </p>
         </div>
         <div class="overflow-hidden content-section" id="content-get-students">
           <h2>get students</h2>
           <p>
-            To get a list of students, you need to make a GET request to the
-            following URL:<br />
-            <code class="higlighted break-word"
-              >http://loadcheck.jopbertrams.nl/students</code
-            >
+            To get a list of all students, you need to make a GET request to the
+            following endpoint:<br />
+            <code class="higlighted break-word">/students</code>
           </p>
           <h4>Result example:</h4>
           <br />
           <pre><code class="json"> 
             [
               {
-                "id": 1,
-                "name": "Student A",
-                "address": "28 Maranta Ave, Karenpark, Akasia, 0118",
-                "coordinates_lat": "-25.6667221",
-                "coordinates_lon": "28.1142254",
-                "loadsheddingGroup": "tshwane-3-amandasig"
+                "student_id": 1,
+                "name": "John",
+                "surname": "Doe",
+                "loadshedding_area": "ninapark",
+                "calendar_name": "gauteng-tshwane-group-10.ics"
               },
               {
-                "id": 2,
-                "name": "Student B",
-                "address": "28 Maranta Ave, Karenpark, Akasia, 0118",
-                "coordinates_lat": null,
-                "coordinates_lon": null,
-                "loadsheddingGroup": null
+                "student_id": 2,
+                "name": "Hugh",
+                "surname": "Saturation",
+                "loadshedding_area": "ninapark",
+                "calendar_name": "gauteng-tshwane-group-10.ics"
               },
               {
-                "id": 3,
-                "name": "Student C",
-                "address": "23 High St, Randburg, 2194",
-                "coordinates_lat": "-26.1909199",
-                "coordinates_lon": "27.9902753",
-                "loadsheddingGroup": "jhbcitypower2-5-crosby"
+                "student_id": 3,
+                "name": "Barry",
+                "surname": "Tone",
+                "loadshedding_area": "ninapark",
+                "calendar_name": "gauteng-tshwane-group-10.ics"
               }
             ]
           </code></pre>
@@ -154,46 +145,36 @@
           <h2>get student</h2>
           <p>
             To get a specific student, you need to make a GET request to the
-            following URL with a student Id:<br />
-            <code class="higlighted break-word"
-              >http://loadcheck.jopbertrams.nl/students/{id}</code
-            >
+            following endpoint with a student Id:<br />
+            <code class="higlighted break-word">/students/{id}</code>
           </p>
           <h4>Result example:</h4>
           <br />
           <pre><code class="json"> 
             {
-              "id": 1,
-              "name": "Student A",
-              "address": "28 Maranta Ave, Karenpark, Akasia, 0118",
-              "coordinates_lat": "-25.6667221",
-              "coordinates_lon": "28.1142254",
-              "loadsheddingGroup": "tshwane-3-amandasig"
+              "student_id": 1,
+              "name": "John",
+              "surname": "Doe",
+              "loadshedding_area": "ninapark",
+              "calendar_name": "gauteng-tshwane-group-10.ics"
             }
           </code></pre>
         </div>
         <div
           class="overflow-hidden content-section"
-          id="content-get-loadshedding-group"
+          id="content-update-student"
         >
-          <h2>get loadshedding group</h2>
+          <h2>update student</h2>
           <p>
-            <strong
-              >This endpoint uses the EskomSePush API 2.0. Do not use it
-              unnecessarily often because of the daily limit!</strong
-            >
-          </p>
-          <p>
-            To see in which Eskom Loadshedding group a student lives, you need
-            to make a GET request to the following URL with a student Id:<br />
-            <code class="higlighted break-word"
-              >http://loadcheck.jopbertrams.nl/students/{id}/loadsheddinggroup</code
-            >
+            To update the loadshedding_area and calendar_name of a student, you
+            need to make a PATCH request to the following endpoint with a
+            student Id:<br />
+            <code class="higlighted break-word">/students/{id}</code>
           </p>
           <h4>Result example:</h4>
           <br />
           <pre><code class="json"> 
-            "tshwane-3-amandasig"
+            OK (200)
           </code></pre>
         </div>
         <div
@@ -202,98 +183,10 @@
         >
           <h2>get loadshedding schedule</h2>
           <p>
-            <strong
-              >This endpoint uses the EskomSePush API 2.0. Do not use it
-              unnecessarily often because of the daily limit!</strong
-            >
-          </p>
-          <p>
             To receive the loadshedding schedule of a student, you need to make
-            a GET request to the following URL with a student Id:<br />
+            a GET request to the following endpoint with a student Id:<br />
             <code class="higlighted break-word"
-              >http://loadcheck.jopbertrams.nl/students/{id}/loadsheddingschedule</code
-            >
-          </p>
-          <h4>Result example:</h4>
-          <br />
-          <pre><code class="json"> 
-            {
-              "events": [
-                {
-                  "end": "2023-03-27T10:30:00+02:00",
-                  "note": "Stage 2",
-                  "start": "2023-03-27T08:00:00+02:00"
-                },
-                {
-                  "end": "2023-03-28T02:30:00+02:00",
-                  "note": "Stage 3",
-                  "start": "2023-03-28T00:00:00+02:00"
-                },
-                {
-                  "end": "2023-03-28T18:30:00+02:00",
-                  "note": "Stage 2",
-                  "start": "2023-03-28T16:00:00+02:00"
-                }
-              ],
-              "info": {
-                "name": "AMANDASIG (3)",
-                "region": "City of Tshwane"
-              },
-              "schedule": {
-                "days": [
-                  {
-                    "date": "2023-03-26",
-                    "name": "Sunday",
-                    "stages": [
-                      [
-                        "00:00-02:30"
-                      ],
-                      [
-                        "00:00-02:30"
-                      ],
-                      [
-                        "00:00-02:30",
-                        "16:00-18:30"
-                      ],
-                      [
-                        "00:00-02:30",
-                        "08:00-10:30",
-                        "16:00-18:30"
-                      ],
-                      [
-                        "00:00-04:30",
-                        "08:00-10:30",
-                        "16:00-18:30"
-                      ],
-                      [
-                        "00:00-04:30",
-                        "08:00-10:30",
-                        "16:00-18:30"
-                      ],
-                      [
-                        "00:00-04:30",
-                        "08:00-10:30",
-                        "16:00-20:30"
-                      ],
-                      [
-                        "00:00-04:30",
-                        "08:00-12:30",
-                        "16:00-20:30"
-                      ]
-                    ]
-                  }         
-                ]
-              }
-            }
-          </code></pre>
-        </div>
-        <div class="overflow-hidden content-section" id="content-get-classes">
-          <h2>get classes</h2>
-          <p>
-            To get an overview of all classes, you need to make a GET request to
-            the following URL:<br />
-            <code class="higlighted break-word"
-              >http://loadcheck.jopbertrams.nl/classes</code
+              >/students/{id}/loadsheddingschedule</code
             >
           </p>
           <h4>Result example:</h4>
@@ -301,94 +194,105 @@
           <pre><code class="json"> 
             [
               {
-                "id": 1,
-                "name": "X",
-                "time": "AM"
+                "area_name": "gauteng-tshwane-group-2",
+                "finsh": "2023-06-16T22:30:00+02:00",
+                "source": "https://twitter.com/Eskom_SA/status/1668984599936991232",
+                "stage": 3,
+                "start": "2023-06-16T20:00:00+02:00"
               },
               {
-                "id": 2,
-                "name": "Y",
-                "time": "PM"
-              },
-              {
-                "id": 3,
-                "name": "A",
-                "time": "AM"
-              },
-              {
-                "id": 4,
-                "name": "B",
-                "time": "PM"
+                "area_name": "gauteng-tshwane-group-2",
+                "finsh": "2023-06-17T20:30:00+02:00",
+                "source": "https://twitter.com/Eskom_SA/status/1668984599936991232",
+                "stage": 3,
+                "start": "2023-06-17T18:00:00+02:00"
               }
             ]
-          </code></pre>
-        </div>
-        <div class="overflow-hidden content-section" id="content-get-class">
-          <h2>get class</h2>
-          <p>
-            To get a specific class, you need to make a GET request to the
-            following URL with a class Id:<br />
-            <code class="higlighted break-word"
-              >http://loadcheck.jopbertrams.nl/classes/{id}</code
-            >
-          </p>
-          <h4>Result example:</h4>
-          <br />
-          <pre><code class="json"> 
-              {
-                "id": 1,
-                "name": "X",
-                "time": "AM"
-              }
           </code></pre>
         </div>
         <div
           class="overflow-hidden content-section"
-          id="content-get-students-in-class"
+          id="content-get-loadshedding-schedule-campus"
         >
-          <h2>get students in class</h2>
+          <h2>get loadshedding schedule tshwane campus</h2>
           <p>
-            To get an overview of all students in a certain class, you need to
-            make a GET request to the following URL with a class Id:<br />
+            To receive the loadshedding schedule of the tshwane campus, you need
+            to make a GET request to the following endpoint:<br />
             <code class="higlighted break-word"
-              >http://loadcheck.jopbertrams.nl/classes/{id}/students</code
-            >
-          </p>
-          <h4>Result example:</h4>
-          <br />
-          <pre><code class="json"> 
-            [
-              {
-                "id": 15,
-                "name": "Student O",
-                "address": "4 Oxford Rd, Rosebank, 2196",
-                "coordinates_lat": null,
-                "coordinates_lon": null,
-                "loadsheddingGroup": null
-              }
-            ]
-          </code></pre>
-        </div>
-        <div class="overflow-hidden content-section" id="content-upload">
-          <h2>upload residential address</h2>
-          <p>
-            When a GET request is made to this URL the user is able to upload
-            the residential address form of a student. If the user uploaded a
-            valid PDF file with every field filled in the response will be a
-            JSON with the data from the fields.<br />
-            <code class="higlighted break-word"
-              >http://loadcheck.jopbertrams.nl/upload</code
+              >/loadshedding/tshwane_campus</code
             >
           </p>
           <h4>Result example:</h4>
           <br />
           <pre><code class="json"> 
             {
-              "First name": "John",
-              "Surname": "Doe",
-              "Address": "138 Berg Ave",
-              "Postcode": "0182",
-              "Locality": "Akasia"
+              "today": [
+                {
+                  "area_name": "gauteng-tshwane-group-10",
+                  "stage": 3,
+                  "start": "2023-06-19T18:00:00+02:00",
+                  "finsh": "2023-06-19T20:30:00+02:00",
+                  "source": "https://twitter.com/Eskom_SA/status/1668984599936991232"
+                }
+              ],
+              "tomorrow": [
+                {
+                  "area_name": "gauteng-tshwane-group-10",
+                  "stage": 3,
+                  "start": "2023-06-20T18:00:00+02:00",
+                  "finsh": "2023-06-20T20:30:00+02:00",
+                  "source": "https://twitter.com/Eskom_SA/status/1668984599936991232"
+                }
+              ]
+            }
+          </code></pre>
+        </div>
+
+        <div
+          class="overflow-hidden content-section"
+          id="content-get-class-info"
+        >
+          <h2>get class info</h2>
+          <p>
+            To get information about a class, including: students with
+            loadshedding, amount of students and percentage of students with
+            loadshedding, you need to make a GET request to the following
+            endpoint: <br />
+            <code class="higlighted break-word"
+              >/classinfo/{subjectcode}/{time}/{date}</code
+            ><br />
+            with the following parameters being:<br />
+            <code class="higlighted break-word">{subjectcode}</code>: Subject
+            Code<br />
+            <code class="higlighted break-word">{time}</code>: AM or PM <br />
+            <code class="higlighted break-word">{date}</code>: Date in ISO
+            format
+          </p>
+          <h4>Result example:</h4>
+          <br />
+          <pre><code class="json"> 
+            {
+              "PercentageOfStudentsWithLoadshedding": 0.0,
+              "amountOfStudents": 1,
+              "amountOfStudentsWithLoadshedding": 0,
+              "amountOfStudentsWithoutAddress": 1,
+              "students": [
+                {
+                  "calendar_name": null,
+                  "has_given_address": false,
+                  "has_loadshedding_during_class": false,
+                  "loadshedding_area": null,
+                  "loadshedding_info": [
+                    
+                  ],
+                  "name": "John",
+                  "student_id": 1,
+                  "surname": "Doe"
+                },
+                
+              ],
+              "subject": "AAA111",
+              "time": "AM"
             }
           </code></pre>
         </div>
