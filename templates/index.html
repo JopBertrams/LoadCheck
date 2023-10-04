@@ -1,0 +1,309 @@
+<!--
+ API Documentation HTML Template  - 1.0.1
+ Copyright © 2016 Florian Nicolas
+ Licensed under the MIT license.
+ https://github.com/ticlekiwi/API-Documentation-HTML-Template
+ !-->
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>LoadCheck API - Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/hightlightjs-dark.css') }}"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300&family=Source+Code+Pro:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+      media="all"
+    />
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
+  </head>
+
+  <body class="one-content-column-version">
+    <div class="left-menu">
+      <div class="content-logo">
+        <div class="logo">
+          <img
+            src="{{ url_for('static', filename='image/logo.png') }}"
+            height="80"
+          />
+          <br />
+          <span>API Documentation</span>
+        </div>
+      </div>
+      <div class="content-menu">
+        <div class="content-infos">
+          <div class="info"><b>Version:</b> 1.2</div>
+          <div class="info"><b>Last Updated:</b> 19th Jun, 2023</div>
+        </div>
+        <ul>
+          <li class="scroll-to-link" data-target="content-get-started">
+            <a>Get Started</a>
+          </li>
+          <li class="scroll-to-link" data-target="content-get-students">
+            <a>Get Students</a>
+          </li>
+          <li class="scroll-to-link" data-target="content-get-student">
+            <a>Get Student</a>
+          </li>
+          <li class="scroll-to-link" data-target="content-update-student">
+            <a>Update Student</a>
+          </li>
+          <li
+            class="scroll-to-link"
+            data-target="content-get-loadshedding-schedule"
+          >
+            <a>Get loadshedding schedule</a>
+          </li>
+          <li
+            class="scroll-to-link"
+            data-target="content-get-loadshedding-schedule-campus"
+          >
+            <a>Get loadshedding schedule campus</a>
+          </li>
+          <li class="scroll-to-link" data-target="content-get-class-info">
+            <a>Get class info</a>
+          </li>
+          <li class="scroll-to-link" data-target="content-errors">
+            <a>Errors</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content-page">
+      <div class="content">
+        <div class="overflow-hidden content-section" id="content-get-started">
+          <h1>Get started</h1>
+          <p>
+            LoadCheck is an API made for lecturers of
+            <a href="https://www.belgiumcampus.ac.za/" target="_blank"
+              >Belgium Campus</a
+            >
+            to check the loadshedding status of their online students.
+          </p>
+          <p>
+            This API makes use of the open-source
+            <strong>eskom-calendar API</strong> to retrieve loadshedding
+            information. Special thanks to
+            <a
+              href="https://github.com/beyarkay/eskom-calendar/"
+              target="_blank"
+              >beyarkay</a
+            >
+            for this great API.
+          </p>
+        </div>
+        <div class="overflow-hidden content-section" id="content-get-students">
+          <h2>get students</h2>
+          <p>
+            To get a list of all students, you need to make a GET request to the
+            following endpoint:<br />
+            <code class="higlighted break-word">/students</code>
+          </p>
+          <h4>Result example:</h4>
+          <br />
+          <pre><code class="json"> 
+            [
+              {
+                "student_id": 1,
+                "name": "John",
+                "surname": "Doe",
+                "loadshedding_area": "ninapark",
+                "calendar_name": "gauteng-tshwane-group-10.ics"
+              },
+              {
+                "student_id": 2,
+                "name": "Hugh",
+                "surname": "Saturation",
+                "loadshedding_area": "ninapark",
+                "calendar_name": "gauteng-tshwane-group-10.ics"
+              },
+              {
+                "student_id": 3,
+                "name": "Barry",
+                "surname": "Tone",
+                "loadshedding_area": "ninapark",
+                "calendar_name": "gauteng-tshwane-group-10.ics"
+              }
+            ]
+          </code></pre>
+        </div>
+        <div class="overflow-hidden content-section" id="content-get-student">
+          <h2>get student</h2>
+          <p>
+            To get a specific student, you need to make a GET request to the
+            following endpoint with a student Id:<br />
+            <code class="higlighted break-word">/students/{id}</code>
+          </p>
+          <h4>Result example:</h4>
+          <br />
+          <pre><code class="json"> 
+            {
+              "student_id": 1,
+              "name": "John",
+              "surname": "Doe",
+              "loadshedding_area": "ninapark",
+              "calendar_name": "gauteng-tshwane-group-10.ics"
+            }
+          </code></pre>
+        </div>
+        <div
+          class="overflow-hidden content-section"
+          id="content-update-student"
+        >
+          <h2>update student</h2>
+          <p>
+            To update the loadshedding_area and calendar_name of a student, you
+            need to make a PATCH request to the following endpoint with a
+            student Id:<br />
+            <code class="higlighted break-word">/students/{id}</code>
+          </p>
+          <h4>Result example:</h4>
+          <br />
+          <pre><code class="json"> 
+            OK (200)
+          </code></pre>
+        </div>
+        <div
+          class="overflow-hidden content-section"
+          id="content-get-loadshedding-schedule"
+        >
+          <h2>get loadshedding schedule</h2>
+          <p>
+            To receive the loadshedding schedule of a student, you need to make
+            a GET request to the following endpoint with a student Id:<br />
+            <code class="higlighted break-word"
+              >/students/{id}/loadsheddingschedule</code
+            >
+          </p>
+          <h4>Result example:</h4>
+          <br />
+          <pre><code class="json"> 
+            [
+              {
+                "area_name": "gauteng-tshwane-group-2",
+                "finsh": "2023-06-16T22:30:00+02:00",
+                "source": "https://twitter.com/Eskom_SA/status/1668984599936991232",
+                "stage": 3,
+                "start": "2023-06-16T20:00:00+02:00"
+              },
+              {
+                "area_name": "gauteng-tshwane-group-2",
+                "finsh": "2023-06-17T20:30:00+02:00",
+                "source": "https://twitter.com/Eskom_SA/status/1668984599936991232",
+                "stage": 3,
+                "start": "2023-06-17T18:00:00+02:00"
+              }
+            ]
+          </code></pre>
+        </div>
+        <div
+          class="overflow-hidden content-section"
+          id="content-get-loadshedding-schedule-campus"
+        >
+          <h2>get loadshedding schedule tshwane campus</h2>
+          <p>
+            To receive the loadshedding schedule of the tshwane campus, you need
+            to make a GET request to the following endpoint:<br />
+            <code class="higlighted break-word"
+              >/loadshedding/tshwane_campus</code
+            >
+          </p>
+          <h4>Result example:</h4>
+          <br />
+          <pre><code class="json"> 
+            {
+              "today": [
+                {
+                  "area_name": "gauteng-tshwane-group-10",
+                  "stage": 3,
+                  "start": "2023-06-19T18:00:00+02:00",
+                  "finsh": "2023-06-19T20:30:00+02:00",
+                  "source": "https://twitter.com/Eskom_SA/status/1668984599936991232"
+                }
+              ],
+              "tomorrow": [
+                {
+                  "area_name": "gauteng-tshwane-group-10",
+                  "stage": 3,
+                  "start": "2023-06-20T18:00:00+02:00",
+                  "finsh": "2023-06-20T20:30:00+02:00",
+                  "source": "https://twitter.com/Eskom_SA/status/1668984599936991232"
+                }
+              ]
+            }
+          </code></pre>
+        </div>
+
+        <div
+          class="overflow-hidden content-section"
+          id="content-get-class-info"
+        >
+          <h2>get class info</h2>
+          <p>
+            To get information about a class, including: students with
+            loadshedding, amount of students and percentage of students with
+            loadshedding, you need to make a GET request to the following
+            endpoint: <br />
+            <code class="higlighted break-word"
+              >/classinfo/{subjectcode}/{time}/{date}</code
+            ><br />
+            with the following parameters being:<br />
+            <code class="higlighted break-word">{subjectcode}</code>: Subject
+            Code<br />
+            <code class="higlighted break-word">{time}</code>: AM or PM <br />
+            <code class="higlighted break-word">{date}</code>: Date in ISO
+            format
+          </p>
+          <h4>Result example:</h4>
+          <br />
+          <pre><code class="json"> 
+            {
+              "PercentageOfStudentsWithLoadshedding": 0.0,
+              "amountOfStudents": 1,
+              "amountOfStudentsWithLoadshedding": 0,
+              "amountOfStudentsWithoutAddress": 1,
+              "students": [
+                {
+                  "calendar_name": null,
+                  "has_given_address": false,
+                  "has_loadshedding_during_class": false,
+                  "loadshedding_area": null,
+                  "loadshedding_info": [
+                    
+                  ],
+                  "name": "John",
+                  "student_id": 1,
+                  "surname": "Doe"
+                },
+                
+              ],
+              "subject": "AAA111",
+              "time": "AM"
+            }
+          </code></pre>
+        </div>
+        <div class="overflow-hidden content-section" id="content-errors">
+          <h2>Errors</h2>
+          <p>Not implemented yet...</p>
+        </div>
+        <br /><br /><br />
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>
